@@ -3,9 +3,21 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var config = require('./config');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
+const mongoose = require('mongoose');
+const url = config.mongoUrl;
+const connect = mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
+
+//connection to the server
+connect.then((db) => {
+  console.log('\nConnected correctly to server\n');
+}, (err) => {
+  console.log(err);
+});
 
 var app = express();
 
