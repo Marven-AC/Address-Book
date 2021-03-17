@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Currency = mongoose.Types.Currency;
 
-const commentSchema = new Schema({
+const employeeSchema = new Schema({
     first_name: {
         type: String,
         required: true,
@@ -26,15 +25,11 @@ const commentSchema = new Schema({
         required: true,
         unique: true
     },
-    organization: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Organization'
-    }
 }, {
     timestamps: true
 });
 
-const Organization = new Schema({
+const organizationSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -48,7 +43,7 @@ const Organization = new Schema({
         required: true,
         unique: true
     },
-    employees: [employee]
+    employees: [employeeSchema]
 }, {
     timestamps: true
 });

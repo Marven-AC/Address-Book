@@ -16,7 +16,6 @@ organizationRouter.route('/')
     .get((req, res, next) => {
 
         Organizations.find({})
-            .populate('employees.organization')
             .then((organizations) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
@@ -58,10 +57,7 @@ organizationRouter.route('/')
 organizationRouter.route('/:organizationId')
 
     .get((req, res, next) => {
-        //res.end('Will send you the details of the organization: ' + req.params.organizationId);
-        // parameter retreive with req.params.organizationId the name match in the end and the parameter to retreive the information correctly
         Organizations.findById(req.params.organizationId)
-            .populate('employees.organization')
             .then((organization) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
@@ -77,10 +73,6 @@ organizationRouter.route('/:organizationId')
     })
 
     .put((req, res, next) => {
-        // wirte to add a line to the reply message
-        // res.write('Updating the organization: ' + req.params.organizationId + '\n');
-        // res.end('Will update the organization: ' + req.body.name +
-        //     ' with details: ' + req.body.description);
         Organizations.findByIdAndUpdate(req.params.organizationId, {
             $set: req.body
         }, { new: true }) // new : true will return the updated organization
@@ -107,7 +99,6 @@ organizationRouter.route('/:organizationId')
 organizationRouter.route('/:organizationId/employees')
     .get((req, res, next) => {
         Organizations.findById(req.params.organizationId)
-            .populate('employees.organization')
             .then((organization) => {
                 if (organization != null) {
                     res.statusCode = 200;
@@ -127,19 +118,16 @@ organizationRouter.route('/:organizationId/employees')
         Organizations.findById(req.params.organizationId)
             .then((organization) => {
                 if (organization != null) {
-                    req.body.organization = req.user._id;
                     organization.employees.push(req.body);
                     organization.save()
                         .then((organization) => {
                             Organizations.findById(organization._id)
-                                .populate('employees.organization')
                                 .then((organization) => {
                                     res.statusCode = 200;
                                     res.setHeader('Content-Type', 'application/json');
                                     res.json(organization);
                                 })
                         }, (err) => next(err));
-
                 }
                 else {
                     err = new Error('organization ' + req.params.organizationId + ' not found');
@@ -150,13 +138,13 @@ organizationRouter.route('/:organizationId/employees')
             .catch((err) => next(err));
     })
 
-    .put(authenticate.verifyUser, (req, res, next) => {
+    .put((req, res, next) => {
         res.statusCode = 403;
         res.end('PUT operation not supported on /Organizations/'
             + req.params.organizationId + '/employees');
     })
 
-    .delete(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+    .delete((req, res, next) => {
         Organizations.findById(req.params.organizationId)
             .then((organization) => {
                 if (organization != null) {
@@ -181,15 +169,14 @@ organizationRouter.route('/:organizationId/employees')
     });
 
 
-organizationRouter.route('/:organizationId/employees/:commentId')
+organizationRouter.route('/:organizationId/employees/:employeeId')
     .get((req, res, next) => {
         Organizations.findById(req.params.organizationId)
-            .populate('employees.organization')
             .then((organization) => {
-                if (organization != null && organization.employees.id(req.params.commentId) != null) {
+                if (organization != null && organization.employees.id(req.params.employeeId) != null) {
                     res.statusCode = 200;
                     res.setHeader('Content-Type', 'application/json');
-                    res.json(organization.employees.id(req.params.commentId));
+                    res.json(organization.employees.id(req.params.employeeId));
                 }
                 // organization doesn't exist
                 else if (organization == null) {
@@ -197,9 +184,9 @@ organizationRouter.route('/:organizationId/employees/:commentId')
                     err.status = 404;
                     return next(err);
                 }
-                // comment doesn't exist
+                // employee doesn't exist
                 else {
-                    err = new Error('Comment ' + req.params.commentId + ' not found');
+                    err = new Error('Employee ' + req.params.employeeId + ' not found');
                     err.status = 404;
                     return next(err);
                 }
@@ -207,34 +194,34 @@ organizationRouter.route('/:organizationId/employees/:commentId')
             .catch((err) => next(err));
     })
 
-    .post(authenticate.verifyUser, (req, res, next) => {
+    .post((req, res, next) => {
         res.statusCode = 403;
         res.end('POST operation not supported on /Organizations/' + req.params.organizationId
-            + '/employees/' + req.params.commentId);
+            + '/employees/' + req.params.employeeId);
     })
 
-    .put(authenticate.verifyUser, (req, res, next) => {
+    .put((req, res, next) => {
         Organizations.findById(req.params.organizationId)
             .then((organization) => {
-                if (!(req.user._id.equals(organization.employees.id(req.params.commentId).organization))) {
-                    console.log(req.user._id);
-                    console.log(organization.employees.id(req.params.commentId).organization);
-                    console.log(organization.employees);
-                    err = new Error('Operation not organizationized!');
-                    err.status = 404;
-                    return next(err);
-                }
-                if (organization != null && organization.employees.id(req.params.commentId) != null) {
-                    if (req.body.rating) {
-                        organization.employees.id(req.params.commentId).rating = req.body.rating;
+                if (organization != null && organization.employees.id(req.params.employeeId) != null) {
+                    if (req.body.first_name) {
+                        organization.employees.id(req.params.employeeId).first_name = req.body.first_name;
                     }
-                    if (req.body.comment) {
-                        organization.employees.id(req.params.commentId).comment = req.body.comment;
+                    if (req.body.last_name) {
+                        organization.employees.id(req.params.employeeId).last_name = req.body.last_name;
+                    }
+                    if (req.body.address) {
+                        organization.employees.id(req.params.employeeId).address = req.body.address;
+                    }
+                    if (req.body.number) {
+                        organization.employees.id(req.params.employeeId).number = req.body.number;
+                    }
+                    if (req.body.email) {
+                        organization.employees.id(req.params.employeeId).email = req.body.email;
                     }
                     organization.save()
                         .then((organization) => {
                             Organizations.findById(organization._id)
-                                .populate('employees.organization')
                                 .then((organization) => {
                                     res.statusCode = 200;
                                     res.setHeader('Content-Type', 'application/json');
@@ -248,9 +235,9 @@ organizationRouter.route('/:organizationId/employees/:commentId')
                     err.status = 404;
                     return next(err);
                 }
-                // comment doesn't exist
+                // employee doesn't exist
                 else {
-                    err = new Error('Comment ' + req.params.commentId + ' not found');
+                    err = new Error('Employee ' + req.params.employeeId + ' not found');
                     err.status = 404;
                     return next(err);
                 }
@@ -258,25 +245,16 @@ organizationRouter.route('/:organizationId/employees/:commentId')
             .catch((err) => next(err));
     })
 
-    .delete(authenticate.verifyUser, (req, res, next) => {
+    .delete((req, res, next) => {
 
         Organizations.findById(req.params.organizationId)
             .then((organization) => {
-                if (!(req.user._id.equals(organization.employees.id(req.params.commentId).organization))) {
-                    console.log(req.user._id);
-                    console.log(organization.employees.id(req.params.commentId).organization);
-                    console.log(organization.employees);
-                    err = new Error('Operation not organizationized!');
-                    err.status = 404;
-                    return next(err);
-                }
-                if (organization != null && organization.employees.id(req.params.commentId) != null) {
-                    organization.employees.id(req.params.commentId).remove();
+                if (organization != null && organization.employees.id(req.params.employeeId) != null) {
+                    organization.employees.id(req.params.employeeId).remove();
                     // after modifying the organization save it
                     organization.save()
                         .then((organization) => {
                             Organizations.findById(organization._id)
-                                .populate('employees.organization')
                                 .then((organization) => {
                                     res.statusCode = 200;
                                     res.setHeader('Content-Type', 'application/json');
@@ -290,7 +268,7 @@ organizationRouter.route('/:organizationId/employees/:commentId')
                     return next(err);
                 }
                 else {
-                    err = new Error('Comment ' + req.params.commentId + ' not found');
+                    err = new Error('Employee ' + req.params.employeeId + ' not found');
                     err.status = 404;
                     return next(err);
                 }
