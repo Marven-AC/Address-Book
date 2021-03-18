@@ -1,30 +1,47 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import { Collapse, Button, CardBody, Card,  CardTitle, CardText } from 'reactstrap';
 
 
 
-const Organizations = (props) => {
-  const [isOpen, setIsOpen] = useState(false);
+class Organizations extends Component{
+  constructor(props){
+    super(props);
+    this.state= {
+      selectedOrganization: null
+    }
+  }
 
-  const toggle = () => setIsOpen(!isOpen);
+  onSelectedOrganization(org){
+    this.setState({selectedOrganization: org});
+  }
 
+  render(){
+    const organizations = this.props.organizations.map((organization) => {
+      return(
+        <div className="col-12 col-md-5 m-1">
+          <Card key={organization.id} 
+          onClick={() => this.onSelectedOrganization(organization)}>
+            <CardTitle>{organization.name}</CardTitle>
+            <CardText>
+              <ul>
+              <li>{organization.number}</li>
+              <li>{organization.address}</li>
+              </ul>
+              </CardText>
+          </Card>
 
-  return (
-    
-    <div className = "col-12">
-      <Button color="primary" onClick={toggle} style={{ marginBottom: '1rem' }}>Toggle</Button>
-      <Collapse isOpen={isOpen}>
-        <Card>
-          <CardBody>
-          Anim pariatur cliche reprehenderit,
-           enim eiusmod high life accusamus terry richardson ad squid. Nihil
-           anim keffiyeh helvetica, craft beer labore wes anderson cred
-           nesciunt sapiente ea proident.
-          </CardBody>
-        </Card>
-      </Collapse>
-    </div>
-  );
+        </div>
+      );
+    });
+
+    return(
+      <div className="container">
+        <div className="row">
+          {organizations}
+        </div>
+      </div>
+    );
+  }
 }
 
 export default Organizations;
