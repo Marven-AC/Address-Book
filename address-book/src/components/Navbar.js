@@ -1,4 +1,4 @@
-import { Navbar, NavbarBrand } from 'reactstrap';
+import { Navbar, NavbarBrand, Button } from 'reactstrap';
 
 function NavbarMenu(){
     return (
@@ -6,7 +6,9 @@ function NavbarMenu(){
           <Navbar dark color="primary">
               <div className="container">
                 <NavbarBrand href="/">Address Book</NavbarBrand>
+                <Button>Add</Button>
               </div>
+              
             </Navbar>
         </div>
       );

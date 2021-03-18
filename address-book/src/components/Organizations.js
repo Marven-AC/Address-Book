@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Collapse, Button, CardBody, Card,  CardTitle, CardText } from 'reactstrap';
+import { Button, CardBody, Card,  CardTitle, CardText } from 'reactstrap';
 
 
 
@@ -13,6 +13,24 @@ class Organizations extends Component{
 
   onSelectedOrganization(org){
     this.setState({selectedOrganization: org});
+  }
+
+  renderOrganization(organization){
+    if(organization != null)
+      return(
+        <Card>
+          <CardBody>
+            <CardTitle>{"Employees of " + organization.name}</CardTitle>
+            <CardText>{organization.employees[0].name}</CardText>
+            <div className="row">
+              <div className="col-4"><Button>Update</Button></div>
+              <div className="col-4"><Button>Add</Button></div>
+              <div className="col-4"><Button>Delete</Button></div>
+            </div>
+            
+          </CardBody>
+        </Card>
+      );
   }
 
   render(){
@@ -38,6 +56,12 @@ class Organizations extends Component{
       <div className="container">
         <div className="row">
           {organizations}
+        </div>
+        <div className="row">
+          <div className="col-12  m-1">
+            {this.renderOrganization(this.state.selectedOrganization)}
+          </div>
+
         </div>
       </div>
     );
