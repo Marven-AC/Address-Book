@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, CardBody, Card,  CardTitle, CardText } from 'reactstrap';
-
+import Employees from './Employees';
 
 
 class Organizations extends Component{
@@ -26,6 +26,7 @@ class Organizations extends Component{
               <div className="col-4"><Button>Update</Button></div>
               <div className="col-4"><Button>Add</Button></div>
               <div className="col-4"><Button>Delete</Button></div>
+              <Employees employees={organization.employees} />
             </div>
             
           </CardBody>
