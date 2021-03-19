@@ -67,7 +67,7 @@ class Organizations extends Component{
               <div className="col-4"><UpdateOrg organization={organization} /></div>
               <div className="col-4"><AddEmp organization={organization} /></div>
               <div className="col-4" ><Button onClick={() => this.deleteOrg(organization._id)}>Delete</Button></div>
-              <Employees employees={organization.employees} />
+              <Employees employees={organization.employees} orgId={organization._id} />
             </div>
             
           </CardBody>

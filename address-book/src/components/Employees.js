@@ -16,7 +16,14 @@ class Employees extends Component{
     console.log(employee._id);
   }
 
- 
+  deleteEmp(empId){
+    if(window.confirm('Are you sure?')){
+      fetch('/organizations/'+ this.props.orgId +'/employees/'+empId, {
+        method:'DELETE',
+        headers: {'Accept':'application/json','Content-Type':'application/json'}
+      })
+    }
+  }
 
   render(){
     const employees = this.props.employees.map((employee) => {
@@ -35,7 +42,7 @@ class Employees extends Component{
             </ul>
             <div>
               <Button>Edit</Button>
-              <Button className="offset-sm-10">Delete</Button>
+              <Button className="offset-sm-10" onClick={() => this.deleteEmp(employee._id)}>Delete</Button>
             </div>
           </Card>
 
