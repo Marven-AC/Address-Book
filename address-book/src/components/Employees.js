@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, CardBody, Card,  CardTitle, CardText } from 'reactstrap';
-
+import UpdateEmp from './UpdateEmpModal';
 
 
 class Employees extends Component{
@@ -41,7 +41,7 @@ class Employees extends Component{
             </CardText>
             </ul>
             <div>
-              <Button>Edit</Button>
+              <UpdateEmp orgId={this.props.orgId} employee={employee} />
               <Button className="offset-sm-10" onClick={() => this.deleteEmp(employee._id)}>Delete</Button>
             </div>
           </Card>
