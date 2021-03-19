@@ -11,14 +11,13 @@ organizationRouter.use(bodyParser.json());
 
 
 organizationRouter.route('/')
-
+    
 
     .get((req, res, next) => {
 
         Organizations.find({})
             .then((organizations) => {
                 res.statusCode = 200;
-                res.header("Access-Control-Allow-Origin", "*");
                 res.setHeader('Content-Type', 'application/json');
                 res.json(organizations);
             }, (err) => next(err))
@@ -27,6 +26,7 @@ organizationRouter.route('/')
     
     // post will carry information in the body of the message in the form of json data
     .post((req, res, next) => {
+        console.log("post");
         Organizations.create(req.body)
             .then((organization) => {
                 console.log('organization created', organization);

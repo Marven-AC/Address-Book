@@ -22,7 +22,7 @@ class Organizations extends Component{
   }
 
   refreshOrgs(){
-    fetch('http://localhost:3001/organizations')
+    fetch('/organizations')
     .then(resp => resp.json())
     .then(data => {
       this.setState({organizations: data});

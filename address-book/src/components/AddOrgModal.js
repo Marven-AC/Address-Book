@@ -13,8 +13,25 @@ const AddOrg = (props) => {
 
   const handleSubmit = (event) =>{
     event.preventDefault();
-    console.log(event);
-    alert(event.target.orgName.value + " " + event.target.number.value + " " + event.target.address.value);
+    fetch('/organizations', {
+        method:'POST',
+        headers:{
+            Accept:'application/json',
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+            name: event.target.orgName.value,
+            number: event.target.number.value,
+            address: event.target.address.value
+        })
+    })
+    .then(res => res.json())
+    .then((result) => {
+        alert(result);
+    },(error) => {
+        alert('Failed!');
+    }
+    )
     toggle();
   }
 
