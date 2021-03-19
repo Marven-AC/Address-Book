@@ -39,9 +39,9 @@ const UpdateOrg = (props) => {
 
   return (
     <div>
-      <Button onClick={toggle}>Update</Button>
+      <Button onClick={toggle}>Edit</Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle}>Update organization {props.organization._id}</ModalHeader>
+        <ModalHeader toggle={toggle}>Edit organization {props.organization._id}</ModalHeader>
         <ModalBody>
             <Form onSubmit = {handleSubmit}>
             <FormGroup>

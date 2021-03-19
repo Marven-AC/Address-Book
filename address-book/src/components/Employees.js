@@ -33,6 +33,10 @@ class Employees extends Component{
               <li>{employee.email}</li>
             </CardText>
             </ul>
+            <div>
+              <Button>Edit</Button>
+              <Button className="offset-sm-10">Delete</Button>
+            </div>
           </Card>
 
         
