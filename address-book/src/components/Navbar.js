@@ -1,4 +1,4 @@
-import { Navbar, NavbarBrand, Button } from 'reactstrap';
+import { Navbar, NavbarBrand } from 'reactstrap';
 import AddOrg from './AddOrgModal';
 function NavbarMenu(){
     return (

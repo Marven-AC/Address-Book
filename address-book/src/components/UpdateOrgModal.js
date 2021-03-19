@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
 
-const AddOrg = (props) => {
+const UpdateOrg = (props) => {
   const {
     buttonLabel,
     className
@@ -13,10 +13,10 @@ const AddOrg = (props) => {
 
   const handleSubmit = (event) =>{
     event.preventDefault();
-    fetch('/organizations', {
-        method:'POST',
+    fetch('/organizations/'+ props.organization._id, {
+        method:'PUT',
         headers:{
-            'Accept':'application/json',
+            Accept:'application/json',
             'Content-Type':'application/json'
         },
         body:JSON.stringify({
@@ -29,6 +29,8 @@ const AddOrg = (props) => {
     .then((result) => {
         alert("Success!");
     },(error) => {
+        
+        console.log(error);
         alert('Failed!');
     }
     )
@@ -37,22 +39,22 @@ const AddOrg = (props) => {
 
   return (
     <div>
-      <Button  onClick={toggle}>Add organization</Button>
+      <Button onClick={toggle}>Update</Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle}>Add organization</ModalHeader>
+        <ModalHeader toggle={toggle}>Update organization {props.organization._id}</ModalHeader>
         <ModalBody>
             <Form onSubmit = {handleSubmit}>
             <FormGroup>
                 <Label for="orgName">Name</Label>
-                <Input type="text" name="name" id="orgName"  />
+                <Input type="text" name="name" id="orgName" defaultValue={props.organization.name} />
             </FormGroup>
             <FormGroup>
                 <Label for="orgNumber">Number</Label>
-                <Input type="text" name="number" id="orgNumber"  />
+                <Input type="text" name="number" id="orgNumber" defaultValue={props.organization.number} />
             </FormGroup>
             <FormGroup>
                 <Label for="orgAddress">Address</Label>
-                <Input type="text" name="address" id="orgAddress"  />
+                <Input type="text" name="address" id="orgAddress" defaultValue={props.organization.address} />
             </FormGroup>
             <FormGroup>
                 
@@ -69,4 +71,4 @@ const AddOrg = (props) => {
   );
 }
 
-export default AddOrg;
+export default UpdateOrg;

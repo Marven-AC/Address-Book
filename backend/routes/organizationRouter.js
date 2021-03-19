@@ -74,6 +74,7 @@ organizationRouter.route('/:organizationId')
     })
 
     .put((req, res, next) => {
+        console.log(req.body);
         Organizations.findByIdAndUpdate(req.params.organizationId, {
             $set: req.body
         }, { new: true }) // new : true will return the updated organization
