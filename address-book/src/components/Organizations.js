@@ -36,6 +36,11 @@ class Organizations extends Component{
           <Card>
           <CardBody>
             <CardTitle>{organization.name + " doesn't have employees yet!"}</CardTitle>
+            <div className="row">
+              <div className="col-4"><Button>Update</Button></div>
+              <div className="col-4"><Button>Add</Button></div>
+              <div className="col-4"><Button>Delete</Button></div>
+            </div>
           </CardBody>
         </Card>
         );

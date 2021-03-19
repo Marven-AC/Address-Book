@@ -1,12 +1,13 @@
 import { Navbar, NavbarBrand, Button } from 'reactstrap';
-
+import AddOrg from './AddOrgModal';
 function NavbarMenu(){
     return (
         <div className="App col-12">
           <Navbar dark color="primary">
               <div className="container">
                 <NavbarBrand href="/">Address Book</NavbarBrand>
-                <Button>Add</Button>
+                
+                <AddOrg />
               </div>
               
             </Navbar>
