@@ -27,7 +27,7 @@ const AddOrg = (props) => {
     })
     .then(res => res.json())
     .then((result) => {
-        alert(result);
+        alert("Success!");
     },(error) => {
         alert('Failed!');
     }

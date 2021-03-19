@@ -21,6 +21,10 @@ class Organizations extends Component{
     this.refreshOrgs();
   }
 
+  componentDidUpdate(){
+    this.refreshOrgs();
+  }
+
   refreshOrgs(){
     fetch('/organizations')
     .then(resp => resp.json())
@@ -48,7 +52,7 @@ class Organizations extends Component{
       return(
         <Card>
           <CardBody>
-            <CardTitle>{"Employees at " + organization.name}</CardTitle>
+            <CardTitle>{organization.name + "'s employees:"}</CardTitle>
             <CardText>{organization.employees[0].name}</CardText>
             <div className="row">
               <div className="col-4"><Button>Update</Button></div>
@@ -70,7 +74,7 @@ class Organizations extends Component{
     const organizations = this.state.organizations.map((organization) => {
       return(
         
-          <Card key={organization._id}  className="col-12 col-md-5 m-1"
+          <Card key={organization._id}  className="col-12 col-md-6"
           onClick={() => this.onSelectedOrganization(organization)}>
             <CardTitle>{organization.name}</CardTitle>
             <ul>
