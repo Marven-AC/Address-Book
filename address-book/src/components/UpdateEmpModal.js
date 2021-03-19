@@ -43,7 +43,7 @@ const UpdateEmp = (props) => {
     <div>
       <Button onClick={toggle}>Edit</Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle}>Edit employee {props.employee._id}</ModalHeader>
+        <ModalHeader toggle={toggle}>Edit employee</ModalHeader>
         <ModalBody>
             <Form onSubmit = {handleSubmit}>
             <FormGroup>

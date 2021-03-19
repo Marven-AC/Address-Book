@@ -41,7 +41,7 @@ const UpdateOrg = (props) => {
     <div>
       <Button onClick={toggle}>Edit</Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle}>Edit organization {props.organization._id}</ModalHeader>
+        <ModalHeader toggle={toggle}>Edit organization</ModalHeader>
         <ModalBody>
             <Form onSubmit = {handleSubmit}>
             <FormGroup>
