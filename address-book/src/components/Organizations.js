@@ -21,9 +21,7 @@ class Organizations extends Component{
     this.refreshOrgs();
   }
 
-  componentDidUpdate(){
-    this.refreshOrgs();
-  }
+  
 
   refreshOrgs(){
     fetch('/organizations')
@@ -31,6 +29,16 @@ class Organizations extends Component{
     .then(data => {
       this.setState({organizations: data});
     })
+  }
+
+  deleteOrg(orgId){
+    if(window.confirm('Are you sure?')){
+      fetch('/organizations/'+orgId, {
+        method:'DELETE',
+        headers: {'Accept':'application/json','Content-Type':'application/json'}
+      })
+    }
+    this.refreshOrgs();
   }
 
   renderOrganization(organization){
@@ -43,7 +51,7 @@ class Organizations extends Component{
             <div className="row">
               <div className="col-4"><Button>Update</Button></div>
               <div className="col-4"><Button>Add</Button></div>
-              <div className="col-4"><Button>Delete</Button></div>
+              <div className="col-4"><Button onClick={() => this.deleteOrg(organization._id)}>Delete</Button></div>
             </div>
           </CardBody>
         </Card>
@@ -57,7 +65,7 @@ class Organizations extends Component{
             <div className="row">
               <div className="col-4"><Button>Update</Button></div>
               <div className="col-4"><Button>Add</Button></div>
-              <div className="col-4"><Button>Delete</Button></div>
+              <div className="col-4" ><Button onClick={() => this.deleteOrg(organization._id)}>Delete</Button></div>
               <Employees employees={organization.employees} />
             </div>
             
