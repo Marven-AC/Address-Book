@@ -20,7 +20,7 @@ const UpdateOrg = (props) => {
             'Content-Type':'application/json'
         },
         body:JSON.stringify({
-            name: event.target.orgName.value,
+            name: event.target.name.value,
             number: event.target.number.value,
             address: event.target.address.value
         })

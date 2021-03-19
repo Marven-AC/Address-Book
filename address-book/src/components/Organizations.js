@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, CardBody, Card,  CardTitle, CardText } from 'reactstrap';
 import Employees from './Employees';
 import UpdateOrg from './UpdateOrgModal';
+import AddEmp from './AddEmpModal';
 
 class Organizations extends Component{
   constructor(props){
@@ -50,7 +51,7 @@ class Organizations extends Component{
             <CardTitle>{organization.name + " doesn't have employees yet!"}</CardTitle>
             <div className="row">
               <div className="col-4"><UpdateOrg organization={organization} /></div>
-              <div className="col-4"><Button>Add</Button></div>
+              <div className="col-4"><AddEmp organization={organization} /></div>
               <div className="col-4"><Button onClick={() => this.deleteOrg(organization._id)}>Delete</Button></div>
             </div>
           </CardBody>
@@ -62,9 +63,9 @@ class Organizations extends Component{
           <CardBody>
             <CardTitle>{organization.name + "'s employees:"}</CardTitle>
             <CardText>{organization.employees[0].name}</CardText>
-            <div className="row">
+            <div className="row offset-md-1">
               <div className="col-4"><UpdateOrg organization={organization} /></div>
-              <div className="col-4"><Button>Add</Button></div>
+              <div className="col-4"><AddEmp organization={organization} /></div>
               <div className="col-4" ><Button onClick={() => this.deleteOrg(organization._id)}>Delete</Button></div>
               <Employees employees={organization.employees} />
             </div>

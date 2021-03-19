@@ -22,7 +22,7 @@ class Employees extends Component{
     const employees = this.props.employees.map((employee) => {
       return(
        
-          <Card key={employee._id} className="col-12 m-1" 
+          <Card key={employee._id} className="col-10" 
           onClick={() => this.onSelectedEmployee(employee)}>
             <CardTitle>{employee.first_name + " " + employee.last_name}</CardTitle>
             <ul>

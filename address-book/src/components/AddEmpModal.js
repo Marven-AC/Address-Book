@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
 
-const AddOrg = (props) => {
+const AddEmp = (props) => {
   const {
     buttonLabel,
     className
@@ -13,15 +13,17 @@ const AddOrg = (props) => {
 
   const handleSubmit = (event) =>{
     event.preventDefault();
-    fetch('/organizations', {
+    fetch('/organizations/'+ props.organization._id + '/employees', {
         method:'POST',
         headers:{
             'Accept':'application/json',
             'Content-Type':'application/json'
         },
         body:JSON.stringify({
-            name: event.target.name.value,
+            first_name: event.target.fName.value,
+            last_name: event.target.lName.value,
             number: event.target.number.value,
+            email: event.target.email.value,
             address: event.target.address.value
         })
     })
@@ -29,6 +31,8 @@ const AddOrg = (props) => {
     .then((result) => {
         alert("Success!");
     },(error) => {
+        console.log(event.target.fName.value);
+        console.log(error);
         alert('Failed!');
     }
     )
@@ -37,22 +41,30 @@ const AddOrg = (props) => {
 
   return (
     <div>
-      <Button  onClick={toggle}>Add organization</Button>
+      <Button  onClick={toggle}>Add employee</Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle}>Add organization</ModalHeader>
+        <ModalHeader toggle={toggle}>Add employee</ModalHeader>
         <ModalBody>
             <Form onSubmit = {handleSubmit}>
             <FormGroup>
-                <Label for="orgName">Name</Label>
-                <Input type="text" name="name" id="orgName"  />
+                <Label for="fName">First name</Label>
+                <Input type="text" name="fname" id="fName"  />
             </FormGroup>
             <FormGroup>
-                <Label for="orgNumber">Number</Label>
-                <Input type="text" name="number" id="orgNumber"  />
+                <Label for="lName">Last name</Label>
+                <Input type="text" name="lname" id="lName"  />
             </FormGroup>
             <FormGroup>
-                <Label for="orgAddress">Address</Label>
-                <Input type="text" name="address" id="orgAddress"  />
+                <Label for="empNumber">Number</Label>
+                <Input type="text" name="number" id="empNumber"  />
+            </FormGroup>
+            <FormGroup>
+                <Label for="empAddress">Address</Label>
+                <Input type="text" name="address" id="empAddress"  />
+            </FormGroup>
+            <FormGroup>
+                <Label for="email">Email</Label>
+                <Input type="text" name="email" id="email"  />
             </FormGroup>
             <FormGroup>
                 
@@ -69,4 +81,4 @@ const AddOrg = (props) => {
   );
 }
 
-export default AddOrg;
+export default AddEmp;
