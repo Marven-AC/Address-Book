@@ -21,20 +21,21 @@ class Employees extends Component{
   render(){
     const employees = this.props.employees.map((employee) => {
       return(
-        <div className="col-12 m-1">
-          <Card key={employee._id} 
+       
+          <Card key={employee._id} className="col-12 m-1" 
           onClick={() => this.onSelectedEmployee(employee)}>
             <CardTitle>{employee.first_name + " " + employee.last_name}</CardTitle>
+            <ul>
             <CardText>
-              <ul>
+              
               <li>{employee.number}</li>
               <li>{employee.address}</li>
               <li>{employee.email}</li>
-              </ul>
-              </CardText>
+            </CardText>
+            </ul>
           </Card>
 
-        </div>
+        
       );
     });
 

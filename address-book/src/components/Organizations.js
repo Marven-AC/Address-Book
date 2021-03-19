@@ -64,19 +64,19 @@ class Organizations extends Component{
   render(){
     const organizations = this.state.organizations.map((organization) => {
       return(
-        <div className="col-12 col-md-5 m-1">
-          <Card key={organization._id} 
+        
+          <Card key={organization._id}  className="col-12 col-md-5 m-1"
           onClick={() => this.onSelectedOrganization(organization)}>
             <CardTitle>{organization.name}</CardTitle>
-            <CardText>
-              <ul>
+            <ul>
+            <CardText> 
               <li>{organization.number}</li>
-              <li>{organization.address}</li>
-              </ul>
-              </CardText>
+              <li>{organization.address}</li>   
+            </CardText>
+            </ul>
           </Card>
 
-        </div>
+       
       );
     });
 
