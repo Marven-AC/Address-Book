@@ -7,7 +7,8 @@ class Organizations extends Component{
   constructor(props){
     super(props);
     this.state= {
-      selectedOrganization: null
+      selectedOrganization: null,
+      organizations: []
     }
   }
 
@@ -15,12 +16,33 @@ class Organizations extends Component{
     this.setState({selectedOrganization: org});
   }
 
+  componentDidMount(){
+    this.refreshOrgs();
+  }
+
+  refreshOrgs(){
+    fetch('http://localhost:3001/organizations')
+    .then(resp => resp.json())
+    .then(data => {
+      this.setState({organizations: data});
+    })
+  }
+
   renderOrganization(organization){
-    if(organization != null)
+    if(organization != null){
+      if(organization.employees[0] == null){
+        return(
+          <Card>
+          <CardBody>
+            <CardTitle>{organization.name + " doesn't have employees yet!"}</CardTitle>
+          </CardBody>
+        </Card>
+        );
+      }
       return(
         <Card>
           <CardBody>
-            <CardTitle>{"Employees of " + organization.name}</CardTitle>
+            <CardTitle>{"Employees at " + organization.name}</CardTitle>
             <CardText>{organization.employees[0].name}</CardText>
             <div className="row">
               <div className="col-4"><Button>Update</Button></div>
@@ -32,10 +54,14 @@ class Organizations extends Component{
           </CardBody>
         </Card>
       );
+    }
+      else{
+        return;
+      }
   }
 
   render(){
-    const organizations = this.props.organizations.map((organization) => {
+    const organizations = this.state.organizations.map((organization) => {
       return(
         <div className="col-12 col-md-5 m-1">
           <Card key={organization.id} 
