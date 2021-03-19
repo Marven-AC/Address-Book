@@ -11,8 +11,9 @@ class Employees extends Component{
     }
   }
 
-  onSelectedEmployee(org){
-    this.setState({selectedEmployee: org});
+  onSelectedEmployee(employee){
+    this.setState({selectedEmployee: employee});
+    console.log(employee._id);
   }
 
  
@@ -21,7 +22,7 @@ class Employees extends Component{
     const employees = this.props.employees.map((employee) => {
       return(
         <div className="col-12 m-1">
-          <Card key={employee.id} 
+          <Card key={employee._id} 
           onClick={() => this.onSelectedEmployee(employee)}>
             <CardTitle>{employee.first_name + " " + employee.last_name}</CardTitle>
             <CardText>

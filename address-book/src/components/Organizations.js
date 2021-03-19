@@ -14,6 +14,7 @@ class Organizations extends Component{
 
   onSelectedOrganization(org){
     this.setState({selectedOrganization: org});
+    console.log(org._id);
   }
 
   componentDidMount(){
@@ -64,7 +65,7 @@ class Organizations extends Component{
     const organizations = this.state.organizations.map((organization) => {
       return(
         <div className="col-12 col-md-5 m-1">
-          <Card key={organization.id} 
+          <Card key={organization._id} 
           onClick={() => this.onSelectedOrganization(organization)}>
             <CardTitle>{organization.name}</CardTitle>
             <CardText>
