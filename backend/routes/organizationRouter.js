@@ -12,7 +12,7 @@ organizationRouter.use(bodyParser.json());
 
 organizationRouter.route('/')
     
-
+    // get the information of all organizations
     .get((req, res, next) => {
 
         Organizations.find({})
@@ -24,6 +24,7 @@ organizationRouter.route('/')
             .catch((err) => next(err));
     })
     
+    // post an organization
     // post will carry information in the body of the message in the form of json data
     .post((req, res, next) => {
         console.log("post");
@@ -43,8 +44,8 @@ organizationRouter.route('/')
         res.end('PUT operation not supported on /Organizations');
     })
 
+    // delete all organizations
     .delete((req, res, next) => {
-        //res.end('Deleting all the Organizations!');
         Organizations.remove({})
             .then((resp) => {
                 res.statusCode = 200;
@@ -54,9 +55,10 @@ organizationRouter.route('/')
             .catch((err) => next(err));
     });
 
-
+// when specifying an organization
 organizationRouter.route('/:organizationId')
 
+    // get the information of the selected organization
     .get((req, res, next) => {
         Organizations.findById(req.params.organizationId)
             .then((organization) => {
@@ -73,6 +75,7 @@ organizationRouter.route('/:organizationId')
         res.end('POST operation not supported on /Organizations/' + req.params.organizationId);
     })
 
+    // update the selected organization
     .put((req, res, next) => {
         console.log(req.body);
         Organizations.findByIdAndUpdate(req.params.organizationId, {
@@ -86,8 +89,8 @@ organizationRouter.route('/:organizationId')
             .catch((err) => next(err));
     })
 
+    // delete the selected organization
     .delete((req, res, next) => {
-        //res.end('Deleting organizatione: ' + req.params.organizationId);
         Organizations.findByIdAndRemove(req.params.organizationId)
             .then((resp) => {
                 res.statusCode = 200;
@@ -97,8 +100,10 @@ organizationRouter.route('/:organizationId')
             .catch((err) => next(err));
     });
 
-// handle employees
+// handle employees of a selected organization
 organizationRouter.route('/:organizationId/employees')
+
+    // get the information of all employees
     .get((req, res, next) => {
         Organizations.findById(req.params.organizationId)
             .then((organization) => {
@@ -116,6 +121,7 @@ organizationRouter.route('/:organizationId/employees')
             .catch((err) => next(err));
     })
 
+    // post an employee
     .post((req, res, next) => {
         Organizations.findById(req.params.organizationId)
             .then((organization) => {
@@ -140,12 +146,14 @@ organizationRouter.route('/:organizationId/employees')
             .catch((err) => next(err));
     })
 
+    // doesn't make sense to update all employee
     .put((req, res, next) => {
         res.statusCode = 403;
         res.end('PUT operation not supported on /Organizations/'
             + req.params.organizationId + '/employees');
     })
 
+    // delete all employees
     .delete((req, res, next) => {
         Organizations.findById(req.params.organizationId)
             .then((organization) => {
@@ -153,7 +161,6 @@ organizationRouter.route('/:organizationId/employees')
                     for (var i = (organization.employees.length - 1); i >= 0; i--) {
                         organization.employees.id(organization.employees[i]._id).remove();
                     }
-                    // after modifying the organization save it
                     organization.save()
                         .then((organization) => {
                             res.statusCode = 200;
@@ -170,8 +177,10 @@ organizationRouter.route('/:organizationId/employees')
             .catch((err) => next(err));
     });
 
-
+// when specifying an employee
 organizationRouter.route('/:organizationId/employees/:employeeId')
+
+    // show information of the selected employee
     .get((req, res, next) => {
         Organizations.findById(req.params.organizationId)
             .then((organization) => {
@@ -196,12 +205,14 @@ organizationRouter.route('/:organizationId/employees/:employeeId')
             .catch((err) => next(err));
     })
 
+    // doesn't make sense to do a post on a specific employeeId
     .post((req, res, next) => {
         res.statusCode = 403;
         res.end('POST operation not supported on /Organizations/' + req.params.organizationId
             + '/employees/' + req.params.employeeId);
     })
 
+    // update the selected employee
     .put((req, res, next) => {
         Organizations.findById(req.params.organizationId)
             .then((organization) => {
@@ -247,13 +258,13 @@ organizationRouter.route('/:organizationId/employees/:employeeId')
             .catch((err) => next(err));
     })
 
+    // delete the selected employee
     .delete((req, res, next) => {
 
         Organizations.findById(req.params.organizationId)
             .then((organization) => {
                 if (organization != null && organization.employees.id(req.params.employeeId) != null) {
                     organization.employees.id(req.params.employeeId).remove();
-                    // after modifying the organization save it
                     organization.save()
                         .then((organization) => {
                             Organizations.findById(organization._id)
@@ -278,6 +289,6 @@ organizationRouter.route('/:organizationId/employees/:employeeId')
             .catch((err) => next(err));
     });
 
-module.exports = organizationRouter; // export organizationRouter to use in index
+module.exports = organizationRouter; // export organizationRouter to use in app.js
 
 

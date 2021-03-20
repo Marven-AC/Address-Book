@@ -13,6 +13,7 @@ class Organizations extends Component{
     }
   }
 
+  // select a specefic organization
   onSelectedOrganization(org){
     this.setState({selectedOrganization: org});
     console.log(org._id);
@@ -22,8 +23,7 @@ class Organizations extends Component{
     this.refreshOrgs();
   }
 
-
-
+  //  fetch all the organizations from backend
   refreshOrgs(){
     fetch('/organizations')
     .then(resp => resp.json())
@@ -32,6 +32,7 @@ class Organizations extends Component{
     })
   }
 
+  // delete an organization from backend
   deleteOrg(orgId){
     if(window.confirm('Are you sure?')){
       fetch('/organizations/'+orgId, {

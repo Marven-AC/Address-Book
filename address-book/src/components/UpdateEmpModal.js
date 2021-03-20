@@ -10,7 +10,8 @@ const UpdateEmp = (props) => {
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
-
+  
+  // update selected employee
   const handleSubmit = (event) =>{
     event.preventDefault();
     fetch('/organizations/'+ props.orgId + '/employees/' + props.employee._id, {
@@ -30,6 +31,7 @@ const UpdateEmp = (props) => {
     .then(res => res.json())
     .then((result) => {
         alert("Success!");
+        window.location.reload();
     },(error) => {
         console.log(props.orgId);
         console.log(error);

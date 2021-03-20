@@ -11,6 +11,7 @@ const UpdateOrg = (props) => {
 
   const toggle = () => setModal(!modal);
 
+  // update selected organization
   const handleSubmit = (event) =>{
     event.preventDefault();
     fetch('/organizations/'+ props.organization._id, {
@@ -28,6 +29,7 @@ const UpdateOrg = (props) => {
     .then(res => res.json())
     .then((result) => {
         alert("Success!");
+        window.location.reload();
     },(error) => {
         
         console.log(error);

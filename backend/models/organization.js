@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-
+// employee schema
 const employeeSchema = new Schema({
     first_name: {
         type: String,
@@ -29,6 +29,8 @@ const employeeSchema = new Schema({
     timestamps: true
 });
 
+
+// organization schema
 const organizationSchema = new Schema({
     name: {
         type: String,

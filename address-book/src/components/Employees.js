@@ -16,13 +16,26 @@ class Employees extends Component{
     console.log(employee._id);
   }
 
+  // delete selected employee from backend
   deleteEmp(empId){
     if(window.confirm('Are you sure?')){
       fetch('/organizations/'+ this.props.orgId +'/employees/'+empId, {
         method:'DELETE',
         headers: {'Accept':'application/json','Content-Type':'application/json'}
       })
+      .then(res => res.json())
+      .then((result) => {
+          alert("Success!");
+          window.location.reload();
+      },(error) => {
+          
+          console.log(error);
+          alert('Failed!');
     }
+    )
+    }
+    
+    
   }
 
   render(){

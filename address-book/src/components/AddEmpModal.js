@@ -11,6 +11,7 @@ const AddEmp = (props) => {
 
   const toggle = () => setModal(!modal);
 
+  // add employee to selected organization
   const handleSubmit = (event) =>{
     event.preventDefault();
     fetch('/organizations/'+ props.organization._id + '/employees', {
@@ -30,6 +31,7 @@ const AddEmp = (props) => {
     .then(res => res.json())
     .then((result) => {
         alert("Success!");
+        window.location.reload();
     },(error) => {
         console.log(event.target.fName.value);
         console.log(error);

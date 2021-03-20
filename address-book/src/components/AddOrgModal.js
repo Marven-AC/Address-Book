@@ -11,6 +11,7 @@ const AddOrg = (props) => {
 
   const toggle = () => setModal(!modal);
 
+  // add organization
   const handleSubmit = (event) =>{
     event.preventDefault();
     fetch('/organizations', {
@@ -28,6 +29,7 @@ const AddOrg = (props) => {
     .then(res => res.json())
     .then((result) => {
         alert("Success!");
+        window.location.reload();
     },(error) => {
         alert('Failed!');
     }

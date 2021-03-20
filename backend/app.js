@@ -5,11 +5,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var config = require('./config');
 
-
+// import routers
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var organizationRouter = require('./routes/organizationRouter');
 
+// connect to the database
 const mongoose = require('mongoose');
 const url = config.mongoUrl;
 const connect = mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
@@ -37,7 +38,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
+// Routers
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/organizations', organizationRouter);
